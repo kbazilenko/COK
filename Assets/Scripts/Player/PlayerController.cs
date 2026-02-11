@@ -5,23 +5,28 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private float speed = 5f;
+    
     private PlayerInputAction playerInputAction;
     private CharacterController characterController;
     private Vector2 moveInput;
-    
     private Vector3 movementDirection;
-    [SerializeField] public float speed = 5f;
+    
 
     private void Awake()
     {
-        playerInputAction = new PlayerInputAction();
         
-        playerInputAction.Player.Somersault.performed += context => SomersaultHandler();
-        
-        playerInputAction.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
-        playerInputAction.Player.Movement.canceled += context => moveInput = Vector2.zero;
     }
 
+    private void OnEnable()
+    {
+        playerInputAction = new PlayerInputAction();
+        playerInputAction.Enable();
+        
+        playerInputAction.Player.Somersault.performed += context => SomersaultHandler();
+        playerInputAction.Player.Movement.performed += context => MovementPerformedHandler(context);
+        playerInputAction.Player.Movement.canceled += context => MovementCanceledHandler();
+    }
 
     private void Start()
     {
@@ -37,17 +42,25 @@ public class PlayerController : MonoBehaviour
             characterController.Move(movementDirection * speed * Time.deltaTime);
         }
     }
-    private void SomersaultHandler()
-    {
-    }
-
-    private void OnEnable()
-    {
-        playerInputAction.Enable();
-    }
-
+    
     private void OnDisable()
     {
+        playerInputAction.Player.Somersault.performed -= context => SomersaultHandler();
+        playerInputAction.Player.Movement.performed -= context => MovementPerformedHandler(context);
+        playerInputAction.Player.Movement.canceled -= context => MovementCanceledHandler();
+        
         playerInputAction.Disable();
+    }
+    
+    private void SomersaultHandler() {}
+    
+    private void MovementPerformedHandler(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
+    
+    private void MovementCanceledHandler()
+    {
+        moveInput = Vector2.zero;
     }
 }
