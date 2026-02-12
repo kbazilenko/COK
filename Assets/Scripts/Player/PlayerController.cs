@@ -11,19 +11,13 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private Vector2 moveInput;
     private Vector3 movementDirection;
-    
-
-    private void Awake()
-    {
-        
-    }
 
     private void OnEnable()
     {
         playerInputAction = new PlayerInputAction();
         playerInputAction.Enable();
         
-        playerInputAction.Player.Somersault.performed += context => SomersaultHandler();
+        playerInputAction.Player.Somersault.performed += context => DashHandler();
         playerInputAction.Player.Movement.performed += context => MovementPerformedHandler(context);
         playerInputAction.Player.Movement.canceled += context => MovementCanceledHandler();
     }
@@ -45,14 +39,17 @@ public class PlayerController : MonoBehaviour
     
     private void OnDisable()
     {
-        playerInputAction.Player.Somersault.performed -= context => SomersaultHandler();
+        playerInputAction.Player.Somersault.performed -= context => DashHandler();
         playerInputAction.Player.Movement.performed -= context => MovementPerformedHandler(context);
         playerInputAction.Player.Movement.canceled -= context => MovementCanceledHandler();
         
         playerInputAction.Disable();
     }
     
-    private void SomersaultHandler() {}
+    private void DashHandler()
+    {
+        // TODO: Implement dash logic in CK-9
+    }
     
     private void MovementPerformedHandler(InputAction.CallbackContext context)
     {
