@@ -16,7 +16,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Somersault",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "b4920520-0b6a-416b-865a-41b9b2681576",
                     "expectedControlType": "",
@@ -84,11 +84,11 @@
                 {
                     "name": "",
                     "id": "5fad6bbb-f3ab-458a-b7b6-8b263e5b544e",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Somersault",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

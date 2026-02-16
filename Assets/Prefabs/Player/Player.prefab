@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   speed: 5
+  dashspeed: 8
 --- !u!1 &7142012268273513162
 GameObject:
   m_ObjectHideFlags: 0
