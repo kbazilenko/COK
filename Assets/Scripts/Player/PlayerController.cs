@@ -21,9 +21,9 @@ public class PlayerController : MonoBehaviour
         playerInputAction = new PlayerInputAction();
         playerInputAction.Enable();
         
-        playerInputAction.Player.Dash.performed += context => DashHandler();
-        playerInputAction.Player.Movement.performed += context => MovementPerformedHandler(context);
-        playerInputAction.Player.Movement.canceled += context => MovementCanceledHandler();
+        playerInputAction.Player.Dash.performed += DashHandler;
+        playerInputAction.Player.Movement.performed += MovementPerformedHandler;
+        playerInputAction.Player.Movement.canceled += MovementCanceledHandler;
     }
 
     private void Start()
@@ -55,15 +55,15 @@ public class PlayerController : MonoBehaviour
     
     private void OnDisable()
     {
-        playerInputAction.Player.Dash.performed -= context => DashHandler();
-        playerInputAction.Player.Movement.performed -= context => MovementPerformedHandler(context);
-        playerInputAction.Player.Movement.canceled -= context => MovementCanceledHandler();
+        playerInputAction.Player.Dash.performed -= DashHandler;
+        playerInputAction.Player.Movement.performed -= MovementPerformedHandler;
+        playerInputAction.Player.Movement.canceled -= MovementCanceledHandler;
         
         playerInputAction.Disable();
     }
 
 
-    private void DashHandler()
+    private void DashHandler(InputAction.CallbackContext context)
     {
         if (!isDashing)
         {
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
     
-    private void MovementCanceledHandler()
+    private void MovementCanceledHandler(InputAction.CallbackContext context)
     {
         moveInput = Vector2.zero;
     }
